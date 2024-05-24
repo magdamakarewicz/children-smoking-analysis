@@ -4,7 +4,7 @@ This project analyzes a dataset of children to understand the impact of smoking 
 
 ## Study Description
 
-Detailed information about the study, including its background and the variables used, can be found in the [STUDY_DESCRIPTION.md](STUDY_DESCRIPTION.md) file.
+Detailed information about the study, including its background and the variables used, can be found in the [STUDY_DESCRIPTION.md](STUDY_DESCRIPTION) file.
 
 ## Features
 
@@ -15,3 +15,7 @@ Detailed information about the study, including its background and the variables
 5. Print average height comparisons between smoking and non-smoking girls.
 6. Retrieve the oldest child in the study.
 7. List all boys who have smoking habits.
+
+## Data Format
+
+The data file children_smoking.txt should be placed in the root directory of the project. It contains information about age, height, sex, FEV, and whether each child smokes or not. The exact variables are listed in the [STUDY_DESCRIPTION.md](STUDY_DESCRIPTION) file.
