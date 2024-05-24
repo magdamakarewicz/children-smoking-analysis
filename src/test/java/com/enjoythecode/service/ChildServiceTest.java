@@ -1,8 +1,10 @@
 package com.enjoythecode.service;
 
+import com.enjoythecode.exception.InsufficientDataException;
 import com.enjoythecode.model.Child;
 import com.enjoythecode.model.Sex;
 import com.enjoythecode.model.Smoke;
+import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -11,6 +13,7 @@ import java.io.PrintStream;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class ChildServiceTest {
 
@@ -22,11 +25,11 @@ class ChildServiceTest {
         childService = new ChildService();
         childrenListForTest = List.of(
                 new Child(1, 301, 9, 1.7, 57, Sex.MALE, Smoke.NO),
-                new Child(2, 451, 8, 1.7, 67, Sex.FEMALE, Smoke.NO),
+                new Child(2, 451, 8, 1.7, 67, Sex.MALE, Smoke.NO),
                 new Child(3, 501, 4, 1.7, 64, Sex.MALE, Smoke.NO),
                 new Child(4, 642, 4, 1.5, 53, Sex.FEMALE, Smoke.YES),
-                new Child(5, 901, 5, 1.8, 57, Sex.FEMALE, Smoke.YES),
-                new Child(6, 1701, 6, 2.3, 61, Sex.MALE, Smoke.YES)
+                new Child(5, 901, 5, 1.9, 57, Sex.FEMALE, Smoke.YES),
+                new Child(6, 1701, 6, 2.3, 61, Sex.FEMALE, Smoke.YES)
         );
     }
 
@@ -49,6 +52,39 @@ class ChildServiceTest {
 
         //clean up
         System.setOut(System.out);
+    }
+
+    @Test
+    public void shouldReturnMaleForWorseAvgFevSex() {
+        //given
+        Sex expectedResult = Sex.MALE;
+
+        //when
+        Sex worseAvgFevSex = childService.getWorseAvgFevSex(childrenListForTest);
+
+        //then
+        assertEquals(expectedResult, worseAvgFevSex);
+    }
+
+    @Test
+    public void shouldThrowInsufficientDataExceptionWhenThereIsNoFemaleChildren() {
+        //given
+        List<Child> childrenListForTest = List.of(
+                new Child(1, 301, 9, 1.7, 57, Sex.MALE, Smoke.NO),
+                new Child(2, 451, 8, 1.7, 67, Sex.MALE, Smoke.NO),
+                new Child(3, 501, 4, 1.7, 64, Sex.MALE, Smoke.NO)
+        );
+
+        //when
+        Exception e = assertThrows(InsufficientDataException.class,
+                () -> childService.getWorseAvgFevSex(childrenListForTest));
+
+        //then
+        SoftAssertions sa = new SoftAssertions();
+        sa.assertThat(e).isExactlyInstanceOf(InsufficientDataException.class);
+        sa.assertThat(e).hasMessage("Cannot calculate average FEV: insufficient data");
+        sa.assertThat(e).hasNoCause();
+        sa.assertAll();
     }
 
 }

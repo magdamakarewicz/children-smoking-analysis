@@ -1,6 +1,8 @@
 package com.enjoythecode.service;
 
+import com.enjoythecode.exception.InsufficientDataException;
 import com.enjoythecode.model.Child;
+import com.enjoythecode.model.Sex;
 
 import java.util.Comparator;
 import java.util.List;
@@ -37,6 +39,22 @@ public class ChildService {
         children.stream()
                 .filter(child -> child.getAge() == age)
                 .forEach(System.out::println);
+    }
+
+    public Sex getWorseAvgFevSex(List<Child> children) {
+        double avgMaleFev = children.stream()
+                .filter(c -> c.getSex() == Sex.MALE)
+                .mapToDouble(Child::getFev)
+                .average()
+                .orElseThrow(() -> new InsufficientDataException("Cannot calculate average FEV: insufficient data"));
+
+        double avgFemaleFev = children.stream()
+                .filter(c -> c.getSex() == Sex.FEMALE)
+                .mapToDouble(Child::getFev)
+                .average()
+                .orElseThrow(() -> new InsufficientDataException("Cannot calculate average FEV: insufficient data"));
+
+        return avgMaleFev < avgFemaleFev ? Sex.MALE : Sex.FEMALE;
     }
 
 }
