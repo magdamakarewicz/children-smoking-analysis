@@ -44,11 +44,14 @@ class ChildServiceTest {
         childService.printOldestAndYoungestChildInfo(childrenListForTest);
 
         //then
-        String expectedOutput = "The oldest child is 9 years old. List of children: \n" +
-                "Child(seqNbr=1, subjID=301, age=9, fev=1.7, height=57.0, sex=MALE, smoke=NO)\n\n" +
-                "The youngest child is 4 years old. List of children: \n" +
-                "Child(seqNbr=3, subjID=501, age=4, fev=1.7, height=64.0, sex=MALE, smoke=NO)\n" +
-                "Child(seqNbr=4, subjID=642, age=4, fev=1.5, height=53.0, sex=FEMALE, smoke=YES)\n";
+        String expectedOutput = """
+                The oldest child is 9 years old. List of children:\s
+                Child(seqNbr=1, subjID=301, age=9, fev=1.7, height=57.0, sex=MALE, smoke=NO)
+
+                The youngest child is 4 years old. List of children:\s
+                Child(seqNbr=3, subjID=501, age=4, fev=1.7, height=64.0, sex=MALE, smoke=NO)
+                Child(seqNbr=4, subjID=642, age=4, fev=1.5, height=53.0, sex=FEMALE, smoke=YES)
+                """;
         assertEquals(expectedOutput, outContent.toString());
 
         //clean up
@@ -130,6 +133,28 @@ class ChildServiceTest {
         sa.assertThat(e).hasMessage("List is null or empty");
         sa.assertThat(e).hasNoCause();
         sa.assertAll();
+    }
+
+    @Test
+    public void shouldPrintAverageHeightForSmokingAndNonSmokingBoysAndGirls() {
+        //given
+        ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(outContent));
+
+        //when
+        childService.printAverageHeightBySmokingStatus(childrenListForTest);
+
+        //then
+        String expectedOutput = """
+                Average height of boys smokers: 61.00 inches
+                Average height of boys non-smokers: 60.50 inches
+                Average height of girls smokers: 55.00 inches
+                Average height of girls non-smokers: 67.00 inches
+                """;
+        assertEquals(expectedOutput, outContent.toString());
+
+        //clean up
+        System.setOut(System.out);
     }
 
 }

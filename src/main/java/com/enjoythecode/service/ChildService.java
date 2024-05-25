@@ -5,8 +5,7 @@ import com.enjoythecode.model.Child;
 import com.enjoythecode.model.Sex;
 import com.enjoythecode.model.Smoke;
 
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 
 public class ChildService {
 
@@ -66,6 +65,35 @@ public class ChildService {
                 .filter(c -> c.getSmoke() == Smoke.YES)
                 .count();
         return Math.round((double) smokers / children.size() * 100.00) / 100.00;
+    }
+
+    public void printAverageHeightBySmokingStatus(List<Child> children) {
+        printAverageHeightBySmokingStatusForSex(children, Sex.MALE);
+        printAverageHeightBySmokingStatusForSex(children, Sex.FEMALE);
+    }
+
+    private void printAverageHeightBySmokingStatusForSex(List<Child> children, Sex sex) {
+        double avgHeightSmokers = Optional.ofNullable(children)
+                .orElseGet(Collections::emptyList)
+                .stream()
+                .filter(c -> c.getSex() == sex && c.getSmoke() == Smoke.YES)
+                .mapToDouble(Child::getHeight)
+                .average()
+                .orElse(0.0);
+
+        double avgHeightNonSmokers = Optional.ofNullable(children)
+                .orElseGet(Collections::emptyList)
+                .stream()
+                .filter(c -> c.getSex() == sex && c.getSmoke() == Smoke.NO)
+                .mapToDouble(Child::getHeight)
+                .average()
+                .orElse(0.0);
+
+        Locale.setDefault(Locale.US);
+        System.out.printf(Locale.US, "Average height of %s smokers: %.2f inches\n",
+                sex == Sex.MALE ? "boys" : "girls", avgHeightSmokers);
+        System.out.printf(Locale.US, "Average height of %s non-smokers: %.2f inches\n",
+                sex == Sex.MALE ? "boys" : "girls", avgHeightNonSmokers);
     }
 
 }
