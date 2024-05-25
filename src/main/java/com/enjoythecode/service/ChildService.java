@@ -3,6 +3,7 @@ package com.enjoythecode.service;
 import com.enjoythecode.exception.InsufficientDataException;
 import com.enjoythecode.model.Child;
 import com.enjoythecode.model.Sex;
+import com.enjoythecode.model.Smoke;
 
 import java.util.Comparator;
 import java.util.List;
@@ -55,6 +56,16 @@ public class ChildService {
                 .orElseThrow(() -> new InsufficientDataException("Cannot calculate average FEV: insufficient data"));
 
         return avgMaleFev < avgFemaleFev ? Sex.MALE : Sex.FEMALE;
+    }
+
+    public double getSmokingHabitsRate(List<Child> children) {
+        if (children == null || children.isEmpty()) {
+            throw new IllegalArgumentException("List is null or empty");
+        }
+        long smokers = children.stream()
+                .filter(c -> c.getSmoke() == Smoke.YES)
+                .count();
+        return Math.round((double) smokers / children.size() * 100.00) / 100.00;
     }
 
 }

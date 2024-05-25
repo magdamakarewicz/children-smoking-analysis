@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Test;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -25,11 +26,11 @@ class ChildServiceTest {
         childService = new ChildService();
         childrenListForTest = List.of(
                 new Child(1, 301, 9, 1.7, 57, Sex.MALE, Smoke.NO),
-                new Child(2, 451, 8, 1.7, 67, Sex.MALE, Smoke.NO),
+                new Child(2, 451, 8, 2.3, 67, Sex.FEMALE, Smoke.NO),
                 new Child(3, 501, 4, 1.7, 64, Sex.MALE, Smoke.NO),
                 new Child(4, 642, 4, 1.5, 53, Sex.FEMALE, Smoke.YES),
                 new Child(5, 901, 5, 1.9, 57, Sex.FEMALE, Smoke.YES),
-                new Child(6, 1701, 6, 2.3, 61, Sex.FEMALE, Smoke.YES)
+                new Child(6, 1701, 6, 1.7, 61, Sex.MALE, Smoke.YES)
         );
     }
 
@@ -83,6 +84,50 @@ class ChildServiceTest {
         SoftAssertions sa = new SoftAssertions();
         sa.assertThat(e).isExactlyInstanceOf(InsufficientDataException.class);
         sa.assertThat(e).hasMessage("Cannot calculate average FEV: insufficient data");
+        sa.assertThat(e).hasNoCause();
+        sa.assertAll();
+    }
+
+    @Test
+    public void shouldReturn0Coma5SmokingHabitsRate() {
+        //given
+        double expectedRate = 0.5;
+
+        //when
+        double smokingHabitsRate = childService.getSmokingHabitsRate(childrenListForTest);
+
+        //then
+        assertEquals(expectedRate, smokingHabitsRate);
+    }
+
+    @Test
+    public void shouldThrowIllegalArgumentExceptionWhenListIsNull() {
+        //given
+        List<Child> childrenListForTest = null;
+
+        //when
+        Exception e = assertThrows(IllegalArgumentException.class, () -> childService.getSmokingHabitsRate(childrenListForTest));
+
+        //then
+        SoftAssertions sa = new SoftAssertions();
+        sa.assertThat(e).isExactlyInstanceOf(IllegalArgumentException.class);
+        sa.assertThat(e).hasMessage("List is null or empty");
+        sa.assertThat(e).hasNoCause();
+        sa.assertAll();
+    }
+
+    @Test
+    public void shouldThrowIllegalArgumentExceptionWhenListIsEmpty() {
+        //given
+        List<Child> childrenListForTest = new ArrayList<>();
+
+        //when
+        Exception e = assertThrows(IllegalArgumentException.class, () -> childService.getSmokingHabitsRate(childrenListForTest));
+
+        //then
+        SoftAssertions sa = new SoftAssertions();
+        sa.assertThat(e).isExactlyInstanceOf(IllegalArgumentException.class);
+        sa.assertThat(e).hasMessage("List is null or empty");
         sa.assertThat(e).hasNoCause();
         sa.assertAll();
     }
