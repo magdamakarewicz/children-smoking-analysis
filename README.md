@@ -8,13 +8,12 @@ Detailed information about the study, including its background and the variables
 
 ## Features
 
-1. Print information about the oldest and youngest child in the study.
+1. Print information about the oldest and youngest child in the study (list all children of this age).
 2. Determine which sex has worse average FEV results.
 3. Calculate the percentage factor (e.g. 0.5 to 50%) of children who smoke.
 4. Print average height comparisons between smoking and non-smoking boys.
 5. Print average height comparisons between smoking and non-smoking girls.
-6. Retrieve the oldest child in the study.
-7. List all boys who have smoking habits.
+6. List all boys who have smoking habits.
 
 ## Data Format
 

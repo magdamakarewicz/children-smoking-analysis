@@ -157,4 +157,16 @@ class ChildServiceTest {
         System.setOut(System.out);
     }
 
+    @Test
+    public void shouldReturnListWithChildWithSeqNbr6() {
+        //given
+        List<Child> expectedResult = List.of(childrenListForTest.get(5));
+
+        //when
+        List<Child> smokingBoys = childService.getSmokingBoys(childrenListForTest);
+
+        //then
+        assertEquals(expectedResult, smokingBoys);
+    }
+
 }

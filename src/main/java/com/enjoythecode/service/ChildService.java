@@ -6,6 +6,7 @@ import com.enjoythecode.model.Sex;
 import com.enjoythecode.model.Smoke;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class ChildService {
 
@@ -94,6 +95,14 @@ public class ChildService {
                 sex == Sex.MALE ? "boys" : "girls", avgHeightSmokers);
         System.out.printf(Locale.US, "Average height of %s non-smokers: %.2f inches\n",
                 sex == Sex.MALE ? "boys" : "girls", avgHeightNonSmokers);
+    }
+
+    public List<Child> getSmokingBoys(List<Child> children) {
+        return Optional.ofNullable(children)
+                .orElseGet(Collections::emptyList)
+                .stream()
+                .filter(c -> c.getSex() == Sex.MALE && c.getSmoke() == Smoke.YES)
+                .collect(Collectors.toList());
     }
 
 }
