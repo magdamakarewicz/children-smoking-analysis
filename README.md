@@ -18,3 +18,30 @@ Detailed information about the study, including its background and the variables
 ## Data Format
 
 The data file children_smoking.txt should be placed in the root directory of the project. It contains information about age, height, sex, FEV, and whether each child smokes or not. The exact variables are listed in the [STUDY_DESCRIPTION.md](STUDY_DESCRIPTION) file.
+
+## Setup and Running the Project
+
+### Prerequisites
+
+- Java 8 or higher
+- Maven
+
+### Running the Project
+
+1. Clone the repository:
+    ```sh
+    git clone https://github.com/magdamakarewicz/children-smoking-analysis
+    cd children-smoking-habits
+    ```
+
+2. Compile and run the project using Maven:
+    ```sh
+    mvn clean install
+    mvn exec:java -Dexec.mainClass="com.enjoythecode.childrensmokinganalysis.app.Main"
+    ```
+
+### Testing
+
+Run the unit tests with Maven:
+```sh
+mvn test

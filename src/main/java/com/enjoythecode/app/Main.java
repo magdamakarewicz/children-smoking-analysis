@@ -3,6 +3,7 @@ package com.enjoythecode.app;
 import com.enjoythecode.model.Child;
 import com.enjoythecode.model.Sex;
 import com.enjoythecode.model.Smoke;
+import com.enjoythecode.service.ChildService;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -21,6 +22,21 @@ public class Main {
 
         //Check number of examined children
         System.out.println("Number of examined children = " + children.size());
+        System.out.println();
+
+        ChildService childService = new ChildService();
+
+        //Call all service methods
+        childService.printOldestAndYoungestChildInfo(children);
+        System.out.println();
+        System.out.println("Sex with worse average FEV: " + childService.getWorseAvgFevSex(children));
+        System.out.println();
+        System.out.printf("Percentage of children with smoking habits: %.2f%%\n", childService.getSmokingHabitsRate(children));
+        System.out.println();
+        childService.printAverageHeightBySmokingStatus(children);
+        System.out.println();
+        System.out.println("Smoking boys: ");
+        childService.getSmokingBoys(children).forEach(System.out::println);
 
     }
 
