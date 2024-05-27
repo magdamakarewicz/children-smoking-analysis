@@ -1,9 +1,9 @@
-package com.enjoythecode.app;
+package com.enjoythecode.childrensmokinganalysis.app;
 
-import com.enjoythecode.model.Child;
-import com.enjoythecode.model.Sex;
-import com.enjoythecode.model.Smoke;
-import com.enjoythecode.service.ChildService;
+import com.enjoythecode.childrensmokinganalysis.model.Child;
+import com.enjoythecode.childrensmokinganalysis.model.Sex;
+import com.enjoythecode.childrensmokinganalysis.model.Smoke;
+import com.enjoythecode.childrensmokinganalysis.service.ChildService;
 
 import java.io.BufferedReader;
 import java.io.File;

@@ -1,4 +1,4 @@
-package com.enjoythecode.exception;
+package com.enjoythecode.childrensmokinganalysis.exception;
 
 public class InsufficientDataException extends RuntimeException {
 

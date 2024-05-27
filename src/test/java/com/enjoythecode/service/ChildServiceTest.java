@@ -1,9 +1,10 @@
 package com.enjoythecode.service;
 
-import com.enjoythecode.exception.InsufficientDataException;
-import com.enjoythecode.model.Child;
-import com.enjoythecode.model.Sex;
-import com.enjoythecode.model.Smoke;
+import com.enjoythecode.childrensmokinganalysis.exception.InsufficientDataException;
+import com.enjoythecode.childrensmokinganalysis.model.Child;
+import com.enjoythecode.childrensmokinganalysis.model.Sex;
+import com.enjoythecode.childrensmokinganalysis.model.Smoke;
+import com.enjoythecode.childrensmokinganalysis.service.ChildService;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

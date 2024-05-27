@@ -1,4 +1,4 @@
-package com.enjoythecode.model;
+package com.enjoythecode.childrensmokinganalysis.model;
 
 import lombok.*;
 

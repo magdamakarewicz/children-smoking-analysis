@@ -1,9 +1,9 @@
-package com.enjoythecode.service;
+package com.enjoythecode.childrensmokinganalysis.service;
 
-import com.enjoythecode.exception.InsufficientDataException;
-import com.enjoythecode.model.Child;
-import com.enjoythecode.model.Sex;
-import com.enjoythecode.model.Smoke;
+import com.enjoythecode.childrensmokinganalysis.model.Child;
+import com.enjoythecode.childrensmokinganalysis.model.Sex;
+import com.enjoythecode.childrensmokinganalysis.exception.InsufficientDataException;
+import com.enjoythecode.childrensmokinganalysis.model.Smoke;
 
 import java.util.*;
 import java.util.stream.Collectors;
