@@ -23,16 +23,20 @@ public class ChildService {
     }
 
     private int getMaxAge(List<Child> children) {
-        return children.stream()
+        return Optional.ofNullable(children)
+                .orElseGet(Collections::emptyList)
+                .stream()
                 .max(Comparator.comparingInt(Child::getAge))
-                .orElseThrow(() -> new IllegalArgumentException("List is empty"))
+                .orElseThrow(() -> new IllegalArgumentException("List is null or empty"))
                 .getAge();
     }
 
     private int getMinAge(List<Child> children) {
-        return children.stream()
+        return Optional.ofNullable(children)
+                .orElseGet(Collections::emptyList)
+                .stream()
                 .min(Comparator.comparingInt(Child::getAge))
-                .orElseThrow(() -> new IllegalArgumentException("List is empty"))
+                .orElseThrow(() -> new IllegalArgumentException("List is null or empty"))
                 .getAge();
     }
 
@@ -43,6 +47,10 @@ public class ChildService {
     }
 
     public Sex getWorseAvgFevSex(List<Child> children) {
+        if (children == null || children.isEmpty()) {
+            throw new IllegalArgumentException("List is null or empty");
+        }
+
         double avgMaleFev = children.stream()
                 .filter(c -> c.getSex() == Sex.MALE)
                 .mapToDouble(Child::getFev)
@@ -69,22 +77,22 @@ public class ChildService {
     }
 
     public void printAverageHeightBySmokingStatus(List<Child> children) {
+        if (children == null || children.isEmpty()) {
+            throw new IllegalArgumentException("List is null or empty");
+        }
+
         printAverageHeightBySmokingStatusForSex(children, Sex.MALE);
         printAverageHeightBySmokingStatusForSex(children, Sex.FEMALE);
     }
 
     private void printAverageHeightBySmokingStatusForSex(List<Child> children, Sex sex) {
-        double avgHeightSmokers = Optional.ofNullable(children)
-                .orElseGet(Collections::emptyList)
-                .stream()
+        double avgHeightSmokers = children.stream()
                 .filter(c -> c.getSex() == sex && c.getSmoke() == Smoke.YES)
                 .mapToDouble(Child::getHeight)
                 .average()
                 .orElse(0.0);
 
-        double avgHeightNonSmokers = Optional.ofNullable(children)
-                .orElseGet(Collections::emptyList)
-                .stream()
+        double avgHeightNonSmokers = children.stream()
                 .filter(c -> c.getSex() == sex && c.getSmoke() == Smoke.NO)
                 .mapToDouble(Child::getHeight)
                 .average()
@@ -98,9 +106,11 @@ public class ChildService {
     }
 
     public List<Child> getSmokingBoys(List<Child> children) {
-        return Optional.ofNullable(children)
-                .orElseGet(Collections::emptyList)
-                .stream()
+        if (children == null || children.isEmpty()) {
+            throw new IllegalArgumentException("List is null or empty");
+        }
+
+        return children.stream()
                 .filter(c -> c.getSex() == Sex.MALE && c.getSmoke() == Smoke.YES)
                 .collect(Collectors.toList());
     }
